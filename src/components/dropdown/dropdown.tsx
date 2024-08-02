@@ -23,17 +23,10 @@ type DropdownProps = {
 
 const Dropdown = ({ multiple = false, search = false, options, selectedOptions = [], optionLabel, inputLabel, onChange }: DropdownProps) => {
     const optionLabelProp = (optionLabel && options[0].hasOwnProperty(optionLabel) ? optionLabel : 'label') as keyof DropdownPropOption;
-
     const initialOptionState: any[] = [...options];
-    const initialSelectedState: DropdownPropOption[] = [];
-    const [selected, setSelected] = useState(initialSelectedState);
+    const [selected, setSelected] = useState([] as DropdownPropOption[]);
     const [optionItems, setOptions] = useState(initialOptionState);
     const [searchInputValue, setSearchValue] = useState('');
-
-    useEffect(() => {
-        console.log(selectedOptions);
-        setSelected(validateOptions(initialOptionState.filter((opt: DropdownPropOption) => selectedOptions.includes(opt.id))));
-    }, [selectedOptions])
 
     useEffect(() => {
         setSelected([]);
@@ -62,7 +55,7 @@ const Dropdown = ({ multiple = false, search = false, options, selectedOptions =
         let alreadySelected = selected.find((selectedOpt: DropdownPropOption) => selectedOpt.id === opt.id);
         let allSelected = multiple ? [...selected, ...(alreadySelected ? [] : [opt])] : [opt];
         setSelected(allSelected);
-        if (onChange) onChange();
+        if (onChange) onChange(allSelected);
     }
 
     /**
@@ -74,7 +67,7 @@ const Dropdown = ({ multiple = false, search = false, options, selectedOptions =
         e.stopPropagation();
         let allSelected = [...selected].filter((selectedOpt: DropdownPropOption) => selectedOpt.id !== opt.id);
         setSelected(allSelected);
-        if (onChange) onChange();
+        if (onChange) onChange(allSelected);
     }
 
     /**
