@@ -29,8 +29,7 @@
     "storybook:css": "tailwindcss -w -i ./src/tailwind-entry.css -o ./src/index.css",
     "build-storybook": "concurrently \"npm run build-storybook:css\" \"storybook build\"",
     "build-storybook:css": "tailwindcss -m -i ./src/tailwind-entry.css -o ./src/index.css",
-    "prepublishOnly": "npm run build",
-    "chromatic": "npx chromatic --project-token=chpt_5a12cbb869e138d"
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
