@@ -3967,7 +3967,7 @@ const vs = /* @__PURE__ */ R.forwardRef(ms), ar = vs, ws = ({ multiple: e = !1, 
     g(""), x("");
   };
   return /* @__PURE__ */ G.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-6 gap-3", children: [
-    /* @__PURE__ */ G.jsx("div", { className: "w-full col-span-1 text-left text-gray-600 text-sm break-words pr-4 pl-2 py-2 font-semibold align-middle", children: i }),
+    /* @__PURE__ */ G.jsx("div", { className: "w-full col-span-1 text-left text-gray-600 text-sm break-words pr-3 pl-2 py-2 font-semibold align-middle", children: i }),
     /* @__PURE__ */ G.jsxs(as, { as: "div", className: `${i ? "col-span-5" : "col-span-6"} w-full relative inline-block text-left pt-0 content-center`, children: [
       /* @__PURE__ */ G.jsxs(qr, { onClick: S, className: "top-0 inline-flex w-full flex text-left h-10 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-none", children: [
         /* @__PURE__ */ G.jsx("div", { className: "w-full truncate", children: e ? c.map(($) => /* @__PURE__ */ G.jsxs("span", { className: "truncate rounded-full font-light mr-1 inline-flex border-transparent items-center bg-gray-100 px-2 py-0 text-xs text-gray-600", children: [
