@@ -1,7 +1,8 @@
 import { Input, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { XCircleIcon } from '@heroicons/react/24/outline';
-import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+
+import { BaseSyntheticEvent, useEffect, useState } from 'react';
 
 type DropdownPropOption = {
     id: string;
@@ -10,25 +11,23 @@ type DropdownPropOption = {
     highlightedLabel?: any;
 }
 type DropdownProps = {
-    id: string;     
+    id: string;
     multiple: boolean;
-    search: boolean; 
-    options: DropdownPropOption[]; 
+    search: boolean;
+    options: DropdownPropOption[];
     selectedOptions: string[];
     optionLabel?: string;
     inputLabel?: string;
     onChange?: Function;
 };
 
-export const Dropdown = ({ multiple, search, options, selectedOptions = [], optionLabel, inputLabel, onChange }: DropdownProps) => {
-    const optionLabelProp = optionLabel && options[0].hasOwnProperty(optionLabel) ? optionLabel : 'label';
+const Dropdown = ({ multiple = false, search = false, options, selectedOptions = [], optionLabel, inputLabel, onChange }: DropdownProps) => {
+    const optionLabelProp = (optionLabel && options[0].hasOwnProperty(optionLabel) ? optionLabel : 'label') as keyof DropdownPropOption;
 
-    const initialOptionState: DropdownPropOption[] = [...options];
-    const initialSelectedState: DropdownPropOption[] = Array.isArray(selectedOptions) ?
+    const initialOptionState: any[] = [...options];
+    const initialSelectedState: DropdownPropOption[] = Array.isArray(selectedOptions) && selectedOptions.length > 0 ?
         initialOptionState.filter((opt: DropdownPropOption) => selectedOptions.includes(opt.id)) : [];
-
     const [selected, setSelected] = useState(initialSelectedState);
-    const [selectedOptionIds, setSelectedOptionids] = useState(selectedOptions);
     const [optionItems, setOptions] = useState(initialOptionState);
     const [searchInputValue, setSearchValue] = useState('');
 
@@ -36,10 +35,19 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
         setSelected(validateOptions(initialOptionState.filter((opt: DropdownPropOption) => selectedOptions.includes(opt.id))));
     }, [selectedOptions])
 
+    useEffect(() => {
+        setSelected([]);
+    }, [multiple])
+
+    useEffect(() => {
+        setSelected(validateOptions(initialOptionState.filter((opt: DropdownPropOption) => selectedOptions.includes(opt.id))));
+    }, [options])
+
+
     /**
      * This function to validate if the option is currently in the options prop
      *
-     * @param {object} opt the object option being selected
+     * @param {Array} currentOptions the object option being selected
      */
     const validateOptions = (currentOptions: DropdownPropOption[]): DropdownPropOption[] => {
         return currentOptions.filter((currentOpt: DropdownPropOption) => options.some((opt: DropdownPropOption) => currentOpt.id == opt.id))
@@ -53,9 +61,8 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
     const handleSelect = (opt: DropdownPropOption): void => {
         let alreadySelected = selected.find((selectedOpt: DropdownPropOption) => selectedOpt.id === opt.id);
         let allSelected = multiple ? [...selected, ...(alreadySelected ? [] : [opt])] : [opt];
-        setSelectedOptionids([...allSelected].map((option: DropdownPropOption) => option.id));
         setSelected(allSelected);
-        if(onChange) onChange();
+        if (onChange) onChange();
     }
 
     /**
@@ -65,8 +72,9 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
      */
     const handleRemoveSelection = (e: BaseSyntheticEvent, opt: DropdownPropOption): void => {
         e.stopPropagation();
-        setSelected([...selected].filter((selectedOpt: DropdownPropOption) => selectedOpt.id !== opt.id));
-        if(onChange) onChange();
+        let allSelected = [...selected].filter((selectedOpt: DropdownPropOption) => selectedOpt.id !== opt.id);
+        setSelected(allSelected);
+        if (onChange) onChange();
     }
 
     /**
@@ -107,23 +115,21 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
     }
 
     return (
-        <div className='flex'>
-            <div className={`${inputLabel ? 'w-1/6' : ''}`}>{inputLabel}</div>
-            <Menu as='div' className={`${inputLabel ? 'w-5/6' : 'w-full'} relative inline-block text-left pt-0`}>
-                <div>
-                    <MenuButton onClick={handleMenuClick} className='inline-flex w-full flex text-left gap-x-5.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
-                        <div className='w-full'>
-                            {multiple ? selected.map((opt) => (
-                                <span key={opt.id} className='rounded-full mr-1 inline-flex border-transparent items-center bg-gray-50 px-2 py-0 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10'>
-                                    {opt[optionLabelProp]}
-                                    <XCircleIcon className='pl-2 h-6 w-6 text-gray-500' onClick={(e) => handleRemoveSelection(e, opt)}></XCircleIcon>
-                                </span>
-                            )) : <span className='font-normal'>{selected[0]?.label || ''}</span>}
-                        </div>
+        <div className='grid grid-cols-1 md:grid-cols-6 gap-3'>
+            <div className='w-full col-span-1 text-left text-gray-600 text-sm break-words pr-4 pl-2 py-2 font-semibold align-middle'>{inputLabel}</div>
+            <Menu as='div' className={`${inputLabel ? 'col-span-5' : 'col-span-6'} w-full relative inline-block text-left pt-0 content-center`}>
+                <MenuButton onClick={handleMenuClick} className='top-0 inline-flex w-full flex text-left h-10 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-none'>
+                    <div className='w-full truncate'>
+                        {multiple ? selected.map((opt) => (
+                            <span key={opt.id} className='truncate rounded-full font-light mr-1 inline-flex border-transparent items-center bg-gray-100 px-2 py-0 text-xs text-gray-600'>
+                                {opt[optionLabelProp]}
+                                <XCircleIcon className='pl-2 h-6 w-6 text-gray-500' onClick={(e) => handleRemoveSelection(e, opt)}></XCircleIcon>
+                            </span>
+                        )) : <span className='font-light text-gray-600'>{selected[0]?.[optionLabelProp] || ''}</span>}
+                    </div>
 
-                        <ChevronDownIcon aria-hidden='true' className='-mr-1 h-5 text-gray-500 object-right' />
-                    </MenuButton>
-                </div>
+                    <ChevronDownIcon aria-hidden='true' className='-mr-1 h-5 content-center text-gray-500 object-right' />
+                </MenuButton>
 
                 <MenuItems
                     className='absolute w-full z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in'
@@ -132,7 +138,7 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
                         <div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none'>
                             <MagnifyingGlassIcon className='size-4 text-slate-400'></MagnifyingGlassIcon>
                         </div>
-                        <Input type='text' id='search-input' className='block w-full px-3 py-2 ps-10 pe-8 text-sm text-gray-900 focus:outline-none rounded-t-lg dark:text-white'
+                        <Input type='text' id='search-input' className='block w-full px-3 py-2 ps-10 pe-8 text-sm font-light text-gray-600 focus:outline-none rounded-t-lg dark:text-white'
                             placeholder='Search items' autoComplete='off' onChange={(e) => handleSearchInputChange(e.target.value)} value={searchInputValue}></Input>
                         {searchInputValue &&
                             <XCircleIcon className='absolute inset-y-0 end-2 flex items-center cursor-pointer ps-3 size-7 mt-1 text-gray-500 text-slate-400' onClick={handleSearchRemove}></XCircleIcon>
@@ -142,7 +148,7 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
                     <div className='py-0'>
                         {optionItems.map((opt: DropdownPropOption, index: number) => (
                             <MenuItem className='data-[focus]:bg-emerald-50 data-[focus]:text-gray-900' as='div' key={index} onClick={() => handleSelect(opt)}>
-                                <div className='block px-4 py-2 text-sm text-gray-700'>
+                                <div className='block px-4 py-2 text-sm text-gray-700 font-light'>
                                     <div dangerouslySetInnerHTML={
                                         { __html: (opt.highlightedLabel || opt[optionLabelProp]) }
                                     } />
@@ -156,3 +162,5 @@ export const Dropdown = ({ multiple, search, options, selectedOptions = [], opti
 
     )
 }
+
+export default Dropdown;

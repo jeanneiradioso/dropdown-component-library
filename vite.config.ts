@@ -11,8 +11,8 @@ export default defineConfig({
   build: { 
     lib: { 
       entry: './src/index.ts', 
-      name: 'ui', 
-      fileName: (format) => `ui.${format}.js`,
+      name: 'dynamic-select-dropdown', 
+      fileName: (format) => `dynamic-select-dropdown.${format}.js`,
       formats: ['es', 'cjs', 'umd'],
     }, 
     rollupOptions: { 
