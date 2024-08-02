@@ -13,13 +13,8 @@ npm run storybook
 npm run build
 ```
 ### Test the component library in another project
-In dropdown-component-library directory run:
+Install the library in your project
 ```
-npm link
+npm i dynamic-select-dropdown
 ```
-In your project directory (react app) run:
-```
-npm link dynamic-select-dropdown
-```
-**NOTE**: To avoid duplicate dependencies when you link dynamic-select-dropdown to your project, you can remove .node_modules from /dropdown-component-library before running "npm link dynamic-select-dropdown"
 
