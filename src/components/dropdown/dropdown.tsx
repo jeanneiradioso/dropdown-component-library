@@ -116,7 +116,7 @@ const Dropdown = ({ multiple = false, search = false, options, selectedOptions =
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-6 gap-3'>
-            <div className='w-full col-span-1 text-left text-gray-600 text-sm break-words pr-4 pl-2 py-2 font-semibold align-middle'>{inputLabel}</div>
+            <div className='w-full col-span-1 text-left text-gray-600 text-sm break-words pr-3 pl-2 py-2 font-semibold align-middle'>{inputLabel}</div>
             <Menu as='div' className={`${inputLabel ? 'col-span-5' : 'col-span-6'} w-full relative inline-block text-left pt-0 content-center`}>
                 <MenuButton onClick={handleMenuClick} className='top-0 inline-flex w-full flex text-left h-10 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-none'>
                     <div className='w-full truncate'>

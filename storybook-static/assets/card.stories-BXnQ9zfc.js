@@ -1,6 +1,0 @@
-import{j as e}from"./jsx-runtime-BOK1SJep.js";import"./index-DJ4xAF_z.js";const t=({title:i,description:d})=>e.jsx("div",{className:"ui",children:e.jsx("div",{className:"ui-bg-white ui-rounded-lg ui-shadow-lg ui-overflow-hidden sm:max-w-xs lg:max-w-sm xl:max-w-md",children:e.jsxs("div",{className:"ui-px-6 ui-py-4",children:[e.jsx("h2",{className:"ui-font-sans ui-text-red-700 ui-font-bold ui-text-xl ui-mb-2",children:i}),e.jsx("p",{className:"ui-bg-white ui-border-none ui-rounded-none ui-font-sans ui-text-gray-700 ui-text-base",children:d})]})})});try{t.displayName="Card",t.__docgenInfo={description:"",displayName:"Card",props:{title:{defaultValue:null,description:"",name:"title",required:!0,type:{name:"string"}},description:{defaultValue:null,description:"",name:"description",required:!0,type:{name:"string"}}}}}catch{}const c={title:"Example/Card",component:t,tags:["docsPage"],argTypes:{title:{control:{type:"text"}},description:{control:{type:"text"}}}},r={args:{title:"Card Title",description:"This is a card"}};var s,a,n;r.parameters={...r.parameters,docs:{...(s=r.parameters)==null?void 0:s.docs,source:{originalSource:`{
-  args: {
-    title: "Card Title",
-    description: "This is a card"
-  }
-}`,...(n=(a=r.parameters)==null?void 0:a.docs)==null?void 0:n.source}}};const u=["Primary"];export{r as Primary,u as __namedExportsOrder,c as default};
