@@ -25,13 +25,13 @@ const Dropdown = ({ multiple = false, search = false, options, selectedOptions =
     const optionLabelProp = (optionLabel && options[0].hasOwnProperty(optionLabel) ? optionLabel : 'label') as keyof DropdownPropOption;
 
     const initialOptionState: any[] = [...options];
-    const initialSelectedState: DropdownPropOption[] = Array.isArray(selectedOptions) && selectedOptions.length > 0 ?
-        initialOptionState.filter((opt: DropdownPropOption) => selectedOptions.includes(opt.id)) : [];
+    const initialSelectedState: DropdownPropOption[] = [];
     const [selected, setSelected] = useState(initialSelectedState);
     const [optionItems, setOptions] = useState(initialOptionState);
     const [searchInputValue, setSearchValue] = useState('');
 
     useEffect(() => {
+        console.log(selectedOptions);
         setSelected(validateOptions(initialOptionState.filter((opt: DropdownPropOption) => selectedOptions.includes(opt.id))));
     }, [selectedOptions])
 

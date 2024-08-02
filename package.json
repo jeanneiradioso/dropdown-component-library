@@ -1,6 +1,6 @@
 {
   "name": "dynamic-select-dropdown",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "type": "module",
   "types": "dist/index.d.ts",
   "module": "dist/dynamic-select-dropdown.es.js",
